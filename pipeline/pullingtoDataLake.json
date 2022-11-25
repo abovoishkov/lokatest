@@ -1,0 +1,1365 @@
+{
+	"name": "pullingtoDataLake",
+	"properties": {
+		"activities": [
+			{
+				"name": "IngestionCitiesinDL",
+				"type": "Switch",
+				"dependsOn": [
+					{
+						"activity": "gettingCityName",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"on": {
+						"value": "@variables('cityNAME')",
+						"type": "Expression"
+					},
+					"cases": [
+						{
+							"value": "Bogota",
+							"activities": [
+								{
+									"name": "insertingBogota",
+									"type": "Copy",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "0.12:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"source": {
+											"type": "DelimitedTextSource",
+											"storeSettings": {
+												"type": "AzureFileStorageReadSettings",
+												"recursive": true,
+												"wildcardFileName": "*bogota.csv",
+												"enablePartitionDiscovery": true
+											},
+											"formatSettings": {
+												"type": "DelimitedTextReadSettings"
+											}
+										},
+										"sink": {
+											"type": "ParquetSink",
+											"storeSettings": {
+												"type": "AzureBlobFSWriteSettings"
+											},
+											"formatSettings": {
+												"type": "ParquetWriteSettings"
+											}
+										},
+										"enableStaging": false,
+										"translator": {
+											"type": "TabularTranslator",
+											"mappings": [
+												{
+													"source": {
+														"name": "origin_movement_id",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "origin_movement_id",
+														"type": "String",
+														"physicalType": "UTF8"
+													}
+												},
+												{
+													"source": {
+														"name": "origin_display_name",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "origin_display_name",
+														"type": "String",
+														"physicalType": "UTF8"
+													}
+												},
+												{
+													"source": {
+														"name": "origin_geometry",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "origin_geometry",
+														"type": "String",
+														"physicalType": "UTF8"
+													}
+												},
+												{
+													"source": {
+														"name": "destination_movement_id",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "destination_movement_id",
+														"type": "String",
+														"physicalType": "UTF8"
+													}
+												},
+												{
+													"source": {
+														"name": "destination_display_name",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "destination_display_name",
+														"type": "String",
+														"physicalType": "UTF8"
+													}
+												},
+												{
+													"source": {
+														"name": "destination_geometry",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "destination_geometry",
+														"type": "String",
+														"physicalType": "UTF8"
+													}
+												},
+												{
+													"source": {
+														"name": "date_range",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "date_range",
+														"type": "String",
+														"physicalType": "UTF8"
+													}
+												},
+												{
+													"source": {
+														"name": "mean_travel_time_seconds",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "mean_travel_time_seconds",
+														"type": "String",
+														"physicalType": "UTF8"
+													}
+												},
+												{
+													"source": {
+														"name": "range_lower_bound_travel_time_seconds",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "range_lower_bound_travel_time_seconds",
+														"type": "String",
+														"physicalType": "UTF8"
+													}
+												},
+												{
+													"source": {
+														"name": "range_upper_bound_travel_time_seconds",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "range_upper_bound_travel_time_seconds",
+														"type": "String",
+														"physicalType": "UTF8"
+													}
+												}
+											],
+											"typeConversion": true,
+											"typeConversionSettings": {
+												"allowDataTruncation": true,
+												"treatBooleanAsNumber": false
+											}
+										}
+									},
+									"inputs": [
+										{
+											"referenceName": "cityCSV",
+											"type": "DatasetReference"
+										}
+									],
+									"outputs": [
+										{
+											"referenceName": "parquetCITY",
+											"type": "DatasetReference",
+											"parameters": {
+												"Cityname": {
+													"value": "@variables('cityNAME')",
+													"type": "Expression"
+												}
+											}
+										}
+									]
+								}
+							]
+						},
+						{
+							"value": "Boston",
+							"activities": [
+								{
+									"name": "insertingBoston",
+									"type": "Copy",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "0.12:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"source": {
+											"type": "DelimitedTextSource",
+											"storeSettings": {
+												"type": "AzureFileStorageReadSettings",
+												"recursive": true,
+												"wildcardFileName": "*boston.csv",
+												"enablePartitionDiscovery": true
+											},
+											"formatSettings": {
+												"type": "DelimitedTextReadSettings"
+											}
+										},
+										"sink": {
+											"type": "ParquetSink",
+											"storeSettings": {
+												"type": "AzureBlobFSWriteSettings"
+											},
+											"formatSettings": {
+												"type": "ParquetWriteSettings"
+											}
+										},
+										"enableStaging": false,
+										"translator": {
+											"type": "TabularTranslator",
+											"mappings": [
+												{
+													"source": {
+														"name": "origin_movement_id",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "origin_movement_id",
+														"type": "String",
+														"physicalType": "UTF8"
+													}
+												},
+												{
+													"source": {
+														"name": "origin_display_name",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "origin_display_name",
+														"type": "String",
+														"physicalType": "UTF8"
+													}
+												},
+												{
+													"source": {
+														"name": "origin_geometry",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "origin_geometry",
+														"type": "String",
+														"physicalType": "UTF8"
+													}
+												},
+												{
+													"source": {
+														"name": "destination_movement_id",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "destination_movement_id",
+														"type": "String",
+														"physicalType": "UTF8"
+													}
+												},
+												{
+													"source": {
+														"name": "destination_display_name",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "destination_display_name",
+														"type": "String",
+														"physicalType": "UTF8"
+													}
+												},
+												{
+													"source": {
+														"name": "destination_geometry",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "destination_geometry",
+														"type": "String",
+														"physicalType": "UTF8"
+													}
+												},
+												{
+													"source": {
+														"name": "date_range",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "date_range",
+														"type": "String",
+														"physicalType": "UTF8"
+													}
+												},
+												{
+													"source": {
+														"name": "mean_travel_time_seconds",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "mean_travel_time_seconds",
+														"type": "String",
+														"physicalType": "UTF8"
+													}
+												},
+												{
+													"source": {
+														"name": "range_lower_bound_travel_time_seconds",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "range_lower_bound_travel_time_seconds",
+														"type": "String",
+														"physicalType": "UTF8"
+													}
+												},
+												{
+													"source": {
+														"name": "range_upper_bound_travel_time_seconds",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "range_upper_bound_travel_time_seconds",
+														"type": "String",
+														"physicalType": "UTF8"
+													}
+												}
+											],
+											"typeConversion": true,
+											"typeConversionSettings": {
+												"allowDataTruncation": true,
+												"treatBooleanAsNumber": false
+											}
+										}
+									},
+									"inputs": [
+										{
+											"referenceName": "cityCSV",
+											"type": "DatasetReference"
+										}
+									],
+									"outputs": [
+										{
+											"referenceName": "parquetCITY",
+											"type": "DatasetReference",
+											"parameters": {
+												"Cityname": {
+													"value": "@variables('cityNAME')",
+													"type": "Expression"
+												}
+											}
+										}
+									]
+								}
+							]
+						},
+						{
+							"value": "johannesburg_and_pretoria",
+							"activities": [
+								{
+									"name": "insertingjohannesburg_and_pretoria",
+									"type": "Copy",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "0.12:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"source": {
+											"type": "DelimitedTextSource",
+											"storeSettings": {
+												"type": "AzureFileStorageReadSettings",
+												"recursive": true,
+												"wildcardFileName": "*johannesburg_and_pretoria.csv",
+												"enablePartitionDiscovery": true
+											},
+											"formatSettings": {
+												"type": "DelimitedTextReadSettings"
+											}
+										},
+										"sink": {
+											"type": "ParquetSink",
+											"storeSettings": {
+												"type": "AzureBlobFSWriteSettings"
+											},
+											"formatSettings": {
+												"type": "ParquetWriteSettings"
+											}
+										},
+										"enableStaging": false,
+										"translator": {
+											"type": "TabularTranslator",
+											"mappings": [
+												{
+													"source": {
+														"name": "origin_movement_id",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "origin_movement_id",
+														"type": "String",
+														"physicalType": "UTF8"
+													}
+												},
+												{
+													"source": {
+														"name": "origin_display_name",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "origin_display_name",
+														"type": "String",
+														"physicalType": "UTF8"
+													}
+												},
+												{
+													"source": {
+														"name": "destination_movement_id",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "destination_movement_id",
+														"type": "String",
+														"physicalType": "UTF8"
+													}
+												},
+												{
+													"source": {
+														"name": "destination_display_name",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "destination_display_name",
+														"type": "String",
+														"physicalType": "UTF8"
+													}
+												},
+												{
+													"source": {
+														"name": "date_range",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "date_range",
+														"type": "String",
+														"physicalType": "UTF8"
+													}
+												},
+												{
+													"source": {
+														"name": "mean_travel_time_seconds",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "mean_travel_time_seconds",
+														"type": "String",
+														"physicalType": "UTF8"
+													}
+												},
+												{
+													"source": {
+														"name": "range_lower_bound_travel_time_seconds",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "range_lower_bound_travel_time_seconds",
+														"type": "String",
+														"physicalType": "UTF8"
+													}
+												},
+												{
+													"source": {
+														"name": "range_upper_bound_travel_time_seconds",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "range_upper_bound_travel_time_seconds",
+														"type": "String",
+														"physicalType": "UTF8"
+													}
+												}
+											],
+											"typeConversion": true,
+											"typeConversionSettings": {
+												"allowDataTruncation": true,
+												"treatBooleanAsNumber": false
+											}
+										}
+									},
+									"inputs": [
+										{
+											"referenceName": "cityCSV",
+											"type": "DatasetReference"
+										}
+									],
+									"outputs": [
+										{
+											"referenceName": "parquetCITY",
+											"type": "DatasetReference",
+											"parameters": {
+												"Cityname": {
+													"value": "@variables('cityNAME')",
+													"type": "Expression"
+												}
+											}
+										}
+									]
+								}
+							]
+						},
+						{
+							"value": "Manila",
+							"activities": [
+								{
+									"name": "insertingManila",
+									"type": "Copy",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "0.12:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"source": {
+											"type": "DelimitedTextSource",
+											"storeSettings": {
+												"type": "AzureFileStorageReadSettings",
+												"recursive": true,
+												"wildcardFileName": "*manila.csv",
+												"enablePartitionDiscovery": true
+											},
+											"formatSettings": {
+												"type": "DelimitedTextReadSettings"
+											}
+										},
+										"sink": {
+											"type": "ParquetSink",
+											"storeSettings": {
+												"type": "AzureBlobFSWriteSettings"
+											},
+											"formatSettings": {
+												"type": "ParquetWriteSettings"
+											}
+										},
+										"enableStaging": false,
+										"translator": {
+											"type": "TabularTranslator",
+											"mappings": [
+												{
+													"source": {
+														"name": "origin_movement_id",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "origin_movement_id",
+														"type": "String",
+														"physicalType": "UTF8"
+													}
+												},
+												{
+													"source": {
+														"name": "origin_display_name",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "origin_display_name",
+														"type": "String",
+														"physicalType": "UTF8"
+													}
+												},
+												{
+													"source": {
+														"name": "origin_geometry",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "origin_geometry",
+														"type": "String",
+														"physicalType": "UTF8"
+													}
+												},
+												{
+													"source": {
+														"name": "destination_movement_id",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "destination_movement_id",
+														"type": "String",
+														"physicalType": "UTF8"
+													}
+												},
+												{
+													"source": {
+														"name": "destination_display_name",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "destination_display_name",
+														"type": "String",
+														"physicalType": "UTF8"
+													}
+												},
+												{
+													"source": {
+														"name": "destination_geometry",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "destination_geometry",
+														"type": "String",
+														"physicalType": "UTF8"
+													}
+												},
+												{
+													"source": {
+														"name": "date_range",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "date_range",
+														"type": "String",
+														"physicalType": "UTF8"
+													}
+												},
+												{
+													"source": {
+														"name": "mean_travel_time_seconds",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "mean_travel_time_seconds",
+														"type": "String",
+														"physicalType": "UTF8"
+													}
+												},
+												{
+													"source": {
+														"name": "range_lower_bound_travel_time_seconds",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "range_lower_bound_travel_time_seconds",
+														"type": "String",
+														"physicalType": "UTF8"
+													}
+												},
+												{
+													"source": {
+														"name": "range_upper_bound_travel_time_seconds",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "range_upper_bound_travel_time_seconds",
+														"type": "String",
+														"physicalType": "UTF8"
+													}
+												}
+											],
+											"typeConversion": true,
+											"typeConversionSettings": {
+												"allowDataTruncation": true,
+												"treatBooleanAsNumber": false
+											}
+										}
+									},
+									"inputs": [
+										{
+											"referenceName": "cityCSV",
+											"type": "DatasetReference"
+										}
+									],
+									"outputs": [
+										{
+											"referenceName": "parquetCITY",
+											"type": "DatasetReference",
+											"parameters": {
+												"Cityname": {
+													"value": "@variables('cityNAME')",
+													"type": "Expression"
+												}
+											}
+										}
+									]
+								}
+							]
+						},
+						{
+							"value": "paris",
+							"activities": [
+								{
+									"name": "insertingParis",
+									"type": "Copy",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "0.12:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"source": {
+											"type": "DelimitedTextSource",
+											"storeSettings": {
+												"type": "AzureFileStorageReadSettings",
+												"recursive": true,
+												"wildcardFileName": "*paris.csv",
+												"enablePartitionDiscovery": true
+											},
+											"formatSettings": {
+												"type": "DelimitedTextReadSettings"
+											}
+										},
+										"sink": {
+											"type": "ParquetSink",
+											"storeSettings": {
+												"type": "AzureBlobFSWriteSettings"
+											},
+											"formatSettings": {
+												"type": "ParquetWriteSettings"
+											}
+										},
+										"enableStaging": false,
+										"translator": {
+											"type": "TabularTranslator",
+											"mappings": [
+												{
+													"source": {
+														"name": "origin_movement_id",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "origin_movement_id",
+														"type": "String",
+														"physicalType": "UTF8"
+													}
+												},
+												{
+													"source": {
+														"name": "origin_display_name",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "origin_display_name",
+														"type": "String",
+														"physicalType": "UTF8"
+													}
+												},
+												{
+													"source": {
+														"name": "destination_movement_id",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "destination_movement_id",
+														"type": "String",
+														"physicalType": "UTF8"
+													}
+												},
+												{
+													"source": {
+														"name": "destination_display_name",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "destination_display_name",
+														"type": "String",
+														"physicalType": "UTF8"
+													}
+												},
+												{
+													"source": {
+														"name": "date_range",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "date_range",
+														"type": "String",
+														"physicalType": "UTF8"
+													}
+												},
+												{
+													"source": {
+														"name": "mean_travel_time_seconds",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "mean_travel_time_seconds",
+														"type": "String",
+														"physicalType": "UTF8"
+													}
+												},
+												{
+													"source": {
+														"name": "range_lower_bound_travel_time_seconds",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "range_lower_bound_travel_time_seconds",
+														"type": "String",
+														"physicalType": "UTF8"
+													}
+												},
+												{
+													"source": {
+														"name": "range_upper_bound_travel_time_seconds",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "range_upper_bound_travel_time_seconds",
+														"type": "String",
+														"physicalType": "UTF8"
+													}
+												}
+											],
+											"typeConversion": true,
+											"typeConversionSettings": {
+												"allowDataTruncation": true,
+												"treatBooleanAsNumber": false
+											}
+										}
+									},
+									"inputs": [
+										{
+											"referenceName": "cityCSV",
+											"type": "DatasetReference"
+										}
+									],
+									"outputs": [
+										{
+											"referenceName": "parquetCITY",
+											"type": "DatasetReference",
+											"parameters": {
+												"Cityname": {
+													"value": "@variables('cityNAME')",
+													"type": "Expression"
+												}
+											}
+										}
+									]
+								}
+							]
+						},
+						{
+							"value": "Sydney",
+							"activities": [
+								{
+									"name": "insertingSydney",
+									"type": "Copy",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "0.12:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"source": {
+											"type": "DelimitedTextSource",
+											"storeSettings": {
+												"type": "AzureFileStorageReadSettings",
+												"recursive": true,
+												"wildcardFileName": "*sydney.csv",
+												"enablePartitionDiscovery": true
+											},
+											"formatSettings": {
+												"type": "DelimitedTextReadSettings"
+											}
+										},
+										"sink": {
+											"type": "ParquetSink",
+											"storeSettings": {
+												"type": "AzureBlobFSWriteSettings"
+											},
+											"formatSettings": {
+												"type": "ParquetWriteSettings"
+											}
+										},
+										"enableStaging": false,
+										"translator": {
+											"type": "TabularTranslator",
+											"mappings": [
+												{
+													"source": {
+														"name": "origin_movement_id",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "origin_movement_id",
+														"type": "String",
+														"physicalType": "UTF8"
+													}
+												},
+												{
+													"source": {
+														"name": "origin_display_name",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "origin_display_name",
+														"type": "String",
+														"physicalType": "UTF8"
+													}
+												},
+												{
+													"source": {
+														"name": "origin_geometry",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "origin_geometry",
+														"type": "String",
+														"physicalType": "UTF8"
+													}
+												},
+												{
+													"source": {
+														"name": "destination_movement_id",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "destination_movement_id",
+														"type": "String",
+														"physicalType": "UTF8"
+													}
+												},
+												{
+													"source": {
+														"name": "destination_display_name",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "destination_display_name",
+														"type": "String",
+														"physicalType": "UTF8"
+													}
+												},
+												{
+													"source": {
+														"name": "destination_geometry",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "destination_geometry",
+														"type": "String",
+														"physicalType": "UTF8"
+													}
+												},
+												{
+													"source": {
+														"name": "date_range",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "date_range",
+														"type": "String",
+														"physicalType": "UTF8"
+													}
+												},
+												{
+													"source": {
+														"name": "mean_travel_time_seconds",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "mean_travel_time_seconds",
+														"type": "String",
+														"physicalType": "UTF8"
+													}
+												},
+												{
+													"source": {
+														"name": "range_lower_bound_travel_time_seconds",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "range_lower_bound_travel_time_seconds",
+														"type": "String",
+														"physicalType": "UTF8"
+													}
+												},
+												{
+													"source": {
+														"name": "range_upper_bound_travel_time_seconds",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "range_upper_bound_travel_time_seconds",
+														"type": "String",
+														"physicalType": "UTF8"
+													}
+												}
+											],
+											"typeConversion": true,
+											"typeConversionSettings": {
+												"allowDataTruncation": true,
+												"treatBooleanAsNumber": false
+											}
+										}
+									},
+									"inputs": [
+										{
+											"referenceName": "cityCSV",
+											"type": "DatasetReference"
+										}
+									],
+									"outputs": [
+										{
+											"referenceName": "parquetCITY",
+											"type": "DatasetReference",
+											"parameters": {
+												"Cityname": {
+													"value": "@variables('cityNAME')",
+													"type": "Expression"
+												}
+											}
+										}
+									]
+								}
+							]
+						},
+						{
+							"value": "washington_dc",
+							"activities": [
+								{
+									"name": "insertingwashington_dc",
+									"type": "Copy",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "0.12:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"source": {
+											"type": "DelimitedTextSource",
+											"storeSettings": {
+												"type": "AzureFileStorageReadSettings",
+												"recursive": true,
+												"wildcardFileName": "*washington_dc.csv",
+												"enablePartitionDiscovery": true
+											},
+											"formatSettings": {
+												"type": "DelimitedTextReadSettings"
+											}
+										},
+										"sink": {
+											"type": "ParquetSink",
+											"storeSettings": {
+												"type": "AzureBlobFSWriteSettings"
+											},
+											"formatSettings": {
+												"type": "ParquetWriteSettings"
+											}
+										},
+										"enableStaging": false,
+										"translator": {
+											"type": "TabularTranslator",
+											"mappings": [
+												{
+													"source": {
+														"name": "origin_movement_id",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "origin_movement_id",
+														"type": "String",
+														"physicalType": "UTF8"
+													}
+												},
+												{
+													"source": {
+														"name": "origin_display_name",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "origin_display_name",
+														"type": "String",
+														"physicalType": "UTF8"
+													}
+												},
+												{
+													"source": {
+														"name": "origin_geometry",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "origin_geometry",
+														"type": "String",
+														"physicalType": "UTF8"
+													}
+												},
+												{
+													"source": {
+														"name": "destination_movement_id",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "destination_movement_id",
+														"type": "String",
+														"physicalType": "UTF8"
+													}
+												},
+												{
+													"source": {
+														"name": "destination_display_name",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "destination_display_name",
+														"type": "String",
+														"physicalType": "UTF8"
+													}
+												},
+												{
+													"source": {
+														"name": "destination_geometry",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "destination_geometry",
+														"type": "String",
+														"physicalType": "UTF8"
+													}
+												},
+												{
+													"source": {
+														"name": "date_range",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "date_range",
+														"type": "String",
+														"physicalType": "UTF8"
+													}
+												},
+												{
+													"source": {
+														"name": "mean_travel_time_seconds",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "mean_travel_time_seconds",
+														"type": "String",
+														"physicalType": "UTF8"
+													}
+												},
+												{
+													"source": {
+														"name": "range_lower_bound_travel_time_seconds",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "range_lower_bound_travel_time_seconds",
+														"type": "String",
+														"physicalType": "UTF8"
+													}
+												},
+												{
+													"source": {
+														"name": "range_upper_bound_travel_time_seconds",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "range_upper_bound_travel_time_seconds",
+														"type": "String",
+														"physicalType": "UTF8"
+													}
+												}
+											],
+											"typeConversion": true,
+											"typeConversionSettings": {
+												"allowDataTruncation": true,
+												"treatBooleanAsNumber": false
+											}
+										}
+									},
+									"inputs": [
+										{
+											"referenceName": "cityCSV",
+											"type": "DatasetReference"
+										}
+									],
+									"outputs": [
+										{
+											"referenceName": "parquetCITY",
+											"type": "DatasetReference",
+											"parameters": {
+												"Cityname": {
+													"value": "@variables('cityNAME')",
+													"type": "Expression"
+												}
+											}
+										}
+									]
+								}
+							]
+						}
+					]
+				}
+			},
+			{
+				"name": "Get Metadata1",
+				"type": "GetMetadata",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataset": {
+						"referenceName": "cityCSV",
+						"type": "DatasetReference"
+					},
+					"fieldList": [
+						"itemName"
+					],
+					"storeSettings": {
+						"type": "AzureFileStorageReadSettings",
+						"enablePartitionDiscovery": false
+					},
+					"formatSettings": {
+						"type": "DelimitedTextReadSettings"
+					}
+				}
+			},
+			{
+				"name": "gettingCityName",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "Get Metadata1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "cityNAME",
+					"value": {
+						"value": "@substring(activity('Get Metadata1').output.itemName,13,lastindexof(activity('Get Metadata1').output.itemName,'.csv'))",
+						"type": "Expression"
+					}
+				}
+			}
+		],
+		"variables": {
+			"cityNAME": {
+				"type": "String"
+			}
+		},
+		"annotations": []
+	}
+}

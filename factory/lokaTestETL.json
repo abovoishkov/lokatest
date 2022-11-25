@@ -1,0 +1,9 @@
+{
+	"name": "lokaTestETL",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "32022a33-e6ad-485f-8d0d-4dca9e15b6a4",
+		"tenantId": "590a6bd9-a2f3-4c39-a98d-cdc8644f6f7e"
+	}
+}

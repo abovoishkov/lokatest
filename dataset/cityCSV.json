@@ -1,0 +1,54 @@
+{
+	"name": "cityCSV",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "bloblanding",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureFileStorageLocation"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "origin_movement_id",
+				"type": "String"
+			},
+			{
+				"name": "origin_display_name",
+				"type": "String"
+			},
+			{
+				"name": "destination_movement_id",
+				"type": "String"
+			},
+			{
+				"name": "destination_display_name",
+				"type": "String"
+			},
+			{
+				"name": "date_range",
+				"type": "String"
+			},
+			{
+				"name": "mean_travel_time_seconds",
+				"type": "String"
+			},
+			{
+				"name": "range_lower_bound_travel_time_seconds",
+				"type": "String"
+			},
+			{
+				"name": "range_upper_bound_travel_time_seconds",
+				"type": "String"
+			}
+		]
+	}
+}
