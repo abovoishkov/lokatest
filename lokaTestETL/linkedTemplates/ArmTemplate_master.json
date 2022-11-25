@@ -1,0 +1,70 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "lokaTestETL"
+		},
+		"lokatestbloblanding_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'lokatestbloblanding'"
+		},
+		"bloblanding_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'bloblanding'"
+		},
+		"datalakelokatest_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'datalakelokatest'"
+		},
+		"datalakelokatest_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://lokatestdatalake.dfs.core.windows.net/"
+		},
+		"containerUri": {
+			"type": "string",
+			"metadata": "URI to storage account containing linked ARM templates"
+		},
+		"containerSasToken": {
+			"type": "string",
+			"metadata": "Sas token to storage account containing linked ARM templates"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "lokaTestETL_ArmTemplate_0",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"lokatestbloblanding_connectionString": {
+						"value": "[parameters('lokatestbloblanding_connectionString')]"
+					},
+					"bloblanding_connectionString": {
+						"value": "[parameters('bloblanding_connectionString')]"
+					},
+					"datalakelokatest_accountKey": {
+						"value": "[parameters('datalakelokatest_accountKey')]"
+					},
+					"datalakelokatest_properties_typeProperties_url": {
+						"value": "[parameters('datalakelokatest_properties_typeProperties_url')]"
+					}
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}
