@@ -332,6 +332,104 @@
 										"enableStaging": false,
 										"translator": {
 											"type": "TabularTranslator",
+											"mappings": [
+												{
+													"source": {
+														"name": "origin_movement_id",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "origin_movement_id",
+														"type": "String",
+														"physicalType": "UTF8"
+													}
+												},
+												{
+													"source": {
+														"name": "origin_display_name",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "origin_display_name",
+														"type": "String",
+														"physicalType": "UTF8"
+													}
+												},
+												{
+													"source": {
+														"name": "destination_movement_id",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "destination_movement_id",
+														"type": "String",
+														"physicalType": "UTF8"
+													}
+												},
+												{
+													"source": {
+														"name": "destination_display_name",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "destination_display_name",
+														"type": "String",
+														"physicalType": "UTF8"
+													}
+												},
+												{
+													"source": {
+														"name": "date_range",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "date_range",
+														"type": "String",
+														"physicalType": "UTF8"
+													}
+												},
+												{
+													"source": {
+														"name": "mean_travel_time_seconds",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "mean_travel_time_seconds",
+														"type": "String",
+														"physicalType": "UTF8"
+													}
+												},
+												{
+													"source": {
+														"name": "range_lower_bound_travel_time_seconds",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "range_lower_bound_travel_time_seconds",
+														"type": "String",
+														"physicalType": "UTF8"
+													}
+												},
+												{
+													"source": {
+														"name": "range_upper_bound_travel_time_seconds",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "range_upper_bound_travel_time_seconds",
+														"type": "String",
+														"physicalType": "UTF8"
+													}
+												}
+											],
 											"typeConversion": true,
 											"typeConversionSettings": {
 												"allowDataTruncation": true,
