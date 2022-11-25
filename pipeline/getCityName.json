@@ -76,7 +76,149 @@
 									"outputs": [
 										{
 											"referenceName": "parquetCITY",
+											"type": "DatasetReference",
+											"parameters": {
+												"Cityname": {
+													"value": "@variables('cityNAME')",
+													"type": "Expression"
+												}
+											}
+										}
+									]
+								}
+							]
+						},
+						{
+							"value": "Boston",
+							"activities": [
+								{
+									"name": "insertingBoston",
+									"type": "Copy",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "0.12:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"source": {
+											"type": "DelimitedTextSource",
+											"storeSettings": {
+												"type": "AzureFileStorageReadSettings",
+												"recursive": true,
+												"wildcardFileName": "*boston.csv",
+												"enablePartitionDiscovery": true
+											},
+											"formatSettings": {
+												"type": "DelimitedTextReadSettings"
+											}
+										},
+										"sink": {
+											"type": "ParquetSink",
+											"storeSettings": {
+												"type": "AzureBlobFSWriteSettings"
+											},
+											"formatSettings": {
+												"type": "ParquetWriteSettings"
+											}
+										},
+										"enableStaging": false,
+										"translator": {
+											"type": "TabularTranslator",
+											"typeConversion": true,
+											"typeConversionSettings": {
+												"allowDataTruncation": true,
+												"treatBooleanAsNumber": false
+											}
+										}
+									},
+									"inputs": [
+										{
+											"referenceName": "cityCSV",
 											"type": "DatasetReference"
+										}
+									],
+									"outputs": [
+										{
+											"referenceName": "parquetCITY",
+											"type": "DatasetReference",
+											"parameters": {
+												"Cityname": {
+													"value": "@variables('cityNAME')",
+													"type": "Expression"
+												}
+											}
+										}
+									]
+								}
+							]
+						},
+						{
+							"value": "johannesburg_and_pretoria",
+							"activities": [
+								{
+									"name": "insertingtravel_times_johannesburg_and_pretoria",
+									"type": "Copy",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "0.12:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"source": {
+											"type": "DelimitedTextSource",
+											"storeSettings": {
+												"type": "AzureFileStorageReadSettings",
+												"recursive": true,
+												"wildcardFileName": "*travel_times_johannesburg_and_pretoria.csv",
+												"enablePartitionDiscovery": true
+											},
+											"formatSettings": {
+												"type": "DelimitedTextReadSettings"
+											}
+										},
+										"sink": {
+											"type": "ParquetSink",
+											"storeSettings": {
+												"type": "AzureBlobFSWriteSettings"
+											},
+											"formatSettings": {
+												"type": "ParquetWriteSettings"
+											}
+										},
+										"enableStaging": false,
+										"translator": {
+											"type": "TabularTranslator",
+											"typeConversion": true,
+											"typeConversionSettings": {
+												"allowDataTruncation": true,
+												"treatBooleanAsNumber": false
+											}
+										}
+									},
+									"inputs": [
+										{
+											"referenceName": "cityCSV",
+											"type": "DatasetReference"
+										}
+									],
+									"outputs": [
+										{
+											"referenceName": "parquetCITY",
+											"type": "DatasetReference",
+											"parameters": {
+												"Cityname": {
+													"value": "@variables('cityNAME')",
+													"type": "Expression"
+												}
+											}
 										}
 									]
 								}
